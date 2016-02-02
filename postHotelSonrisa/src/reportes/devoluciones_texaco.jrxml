@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Factura_Pos" pageWidth="216" pageHeight="720" columnWidth="196" leftMargin="10" rightMargin="10" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
+	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2xpbmljYS52X2VuY2FiZXphZG9fZmFjdHVyYSBBUyAsNDU3LDY0LGNmNjcwZWMxLWNlM2MtNGVk&#xA;Yi05ZTVkLWRiZGE0OTAwMTkzMztjbGluaWNhLnZfZGV0YWxsZV9mYWN0dXJhIEFTICwxMzYsMzYs&#xA;NTEyOGQwOTAtNjhhYi00ZjQ5LTg3YTgtNGRjMTZiZDUwNjk5Ow=="/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="NEW_DATAADAPTER.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="numero_factura" class="java.lang.Integer"/>
+	<parameter name="codigo" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT
+v_encabezado_factura.numero_factura,
+v_encabezado_factura.fecha,
+v_encabezado_factura.codigo_cliente,
+v_encabezado_factura.nombre_cliente,
+v_encabezado_factura.direccion,
+v_encabezado_factura.telefono,
+v_encabezado_factura.movil,
+v_encabezado_factura.rtn,
+v_encabezado_factura.subtotal,
+v_encabezado_factura.impuesto,
+v_encabezado_factura.total,
+v_encabezado_factura.codigo,
+v_encabezado_factura.estado_factura,
+v_encabezado_factura.isv18,
+v_encabezado_factura.usuario,
+v_encabezado_factura.pago,
+v_encabezado_factura.descuento,
+v_encabezado_factura.tipo_factura,
+v_encabezado_factura.cambio,
+v_encabezado_factura.total_letras,
+v_encabezado_factura.tipo_pago,
+v_encabezado_factura.id_tipo_factura,
+v_encabezado_factura.agrega_kardex,
+v_detalle_devolucion.articulo,
+v_detalle_devolucion.precio_detalle,
+v_detalle_devolucion.cantidad_detalle,
+v_detalle_devolucion.impuesto_detalle,
+v_detalle_devolucion.descuento_detalle,
+v_detalle_devolucion.subtotal_detalle,
+v_detalle_devolucion.total_detalle,
+v_detalle_devolucion.fecha_devolucion
+FROM
+v_encabezado_factura
+INNER JOIN v_detalle_devolucion ON v_encabezado_factura.numero_factura = v_detalle_devolucion.numero_factura_detalle
+WHERE
+v_encabezado_factura.numero_factura =  $P{numero_factura}]]>
+	</queryString>
+	<field name="numero_factura" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo_cliente" class="java.lang.Long">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nombre_cliente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="direccion" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="telefono" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="movil" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="rtn" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="impuesto" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="codigo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="estado_factura" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="isv18" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="usuario" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pago" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descuento" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_factura" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cambio" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_letras" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="tipo_pago" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="id_tipo_factura" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="agrega_kardex" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="articulo" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="precio_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="cantidad_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="impuesto_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="descuento_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="subtotal_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="total_detalle" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="fecha_devolucion" class="java.sql.Date">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="195" splitType="Stretch">
+			<staticText>
+				<reportElement style="Title" x="1" y="66" width="190" height="22" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<text><![CDATA[Devolucion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="15" width="190" height="12" uuid="62ab06e3-8503-4626-af69-a4bfa871b17c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Olanchito, Yoro, Carretera Salida a Saba]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="4" width="190" height="13" uuid="3c2bd69a-9200-41f6-af53-6a56715225f5"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[TIENDA DE CONVENIENCIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="24" width="190" height="12" uuid="9d982688-d65f-4bf8-9278-8e0aa6805123"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Propietario Rafael Armando Paz]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="44" width="190" height="14" uuid="a1709503-4ace-42cf-9af1-2a4b0fbe7a50"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[Telefono (504) 2446-2620 ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="132" width="80" height="13" uuid="6df3e918-e6bc-479a-8617-b8f92af3092f"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Nombre Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="81" y="132" width="107" height="13" uuid="40c40b92-4084-479c-8897-0a3c56a34b27"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre_cliente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="118" width="58" height="13" uuid="7df0c824-2272-422f-be32-0bf6d685fb4c"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[No Factura:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="59" y="118" width="100" height="13" uuid="a96c5764-304b-421e-89fa-6d5deb067890"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA["001-001-01-"+$F{numero_factura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="39" y="105" width="90" height="13" uuid="9728e7a6-4f41-4354-a5e8-0e638e21fa3d"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fecha_devolucion}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="105" width="38" height="13" uuid="3a90ba1f-70be-49e8-9bf0-037953222adb"/>
+				<textElement>
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Facha:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="34" width="190" height="14" uuid="e67c76ca-6629-47af-a040-917307955170"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[RTN 18071940003468]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="29" y="145" width="92" height="13" uuid="4e2756b3-e44a-4f2a-a483-f57881d284e6"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{rtn}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="145" width="28" height="13" uuid="eeb28120-a349-44ef-8c26-9689bd60ca23"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[RTN:]]></text>
+			</staticText>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="1" y="180" width="196" height="1" uuid="8039a7c9-2f56-4904-b8fc-d244f0b02f7f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="158" width="42" height="13" uuid="adb8cb65-146a-4aaf-8925-b536b6722ea9"/>
+				<textElement>
+					<font fontName="Arial" size="10"/>
+				</textElement>
+				<text><![CDATA[Vendido:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="43" y="158" width="92" height="13" uuid="465c17c1-9c6d-40e4-81d0-d7b7776d9a59"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{usuario}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="53" width="190" height="14" uuid="45284e3b-ab5c-42ac-a02c-f2b7a12e0941"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="8"/>
+				</textElement>
+				<text><![CDATA[joserigo72@yahoo.com]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="196" height="1" uuid="e9d2002a-c8ee-4649-a258-640dad29110c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="35" y="0" width="110" height="15" forecolor="#030303" uuid="6754685d-6437-47f3-b59f-16c8525a9d66"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Descripcion]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="3" y="0" width="32" height="15" forecolor="#030303" uuid="db89b4fe-2010-469d-8892-93072362eb72"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Cant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="145" y="0" width="51" height="15" forecolor="#030303" uuid="3e2a378b-fd1a-4d1f-b6e4-4b80ab2a9568"/>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="9"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Detail" mode="Opaque" x="0" y="0" width="196" height="15" backcolor="#FFFFFF" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="35" y="0" width="110" height="15" uuid="d298e5d7-9187-4cad-a98e-6e65ab264562"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" "+$F{articulo}+" "]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="3" y="0" width="32" height="15" uuid="b2428750-75ab-425e-b459-59bcf05df4e8"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{cantidad_detalle}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="145" y="0" width="51" height="15" uuid="ca68ddd3-3514-4c9f-85c1-ae07ffe8874c"/>
+					<box>
+						<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right">
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<textFieldExpression><![CDATA["L. "+$F{total_detalle}+" "]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<summary>
+		<band height="217">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="12" width="196" height="111" forecolor="#D0B48E" backcolor="#FFFFFF" uuid="5d8169bd-4a75-48c8-8a68-6d3ad5ba9402"/>
+				<staticText>
+					<reportElement x="7" y="16" width="74" height="15" uuid="c4e71c9d-3979-48fb-9d74-f89e425f1ea5"/>
+					<textElement>
+						<font fontName="Arial" size="9"/>
+					</textElement>
+					<text><![CDATA[Total:]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="60" width="196" height="15" uuid="af7f8f6e-6ef9-4e34-bd56-44841283a089"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<text><![CDATA[EXIJA SU FACTURA]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="0" y="87" width="196" height="15" uuid="cdd24937-5046-4d2f-a608-fcc3c254f5fd"/>
+					<textElement textAlignment="Center">
+						<font fontName="Arial" size="10"/>
+					</textElement>
+					<text><![CDATA[es beneficio de todos]]></text>
+				</staticText>
+				<textField pattern="¤ #,##0.00">
+					<reportElement x="96" y="14" width="100" height="20" uuid="680cbb32-fc83-4717-8781-0cad60b4d25a"/>
+					<box rightPadding="3"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$F{total_detalle}]]></textFieldExpression>
+				</textField>
+			</frame>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="10" width="193" height="1" uuid="63bab24d-615c-4c2d-9327-78d2ff918f5f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="92" width="196" height="1" uuid="d892f4f1-d50d-4214-af91-9413231b5a7a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="3" y="6" width="193" height="1" uuid="058af450-81fc-412d-b317-427d5813c04a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="68" y="136" width="91" height="50" uuid="44b2efdf-7308-4de6-86a5-f52155b112a6"/>
+				<jr:Code128 xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" textPosition="bottom">
+					<jr:codeExpression><![CDATA[$P{codigo}]]></jr:codeExpression>
+				</jr:Code128>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>
