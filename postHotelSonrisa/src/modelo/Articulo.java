@@ -14,6 +14,7 @@ public class Articulo {
 	//private double impuesto;
 	private Marca mar=new Marca();
 	private Impuesto imp=new Impuesto();
+	private List<Impuesto> impuestos=new ArrayList<Impuesto>();
 	private List<CodBarra> codigos=new ArrayList<CodBarra>();
 	private double precioVenta=0;
 	private double precioCompra=0;
@@ -93,6 +94,19 @@ public class Articulo {
 	public void setCodBarras(List<CodBarra> cods){
 		codigos=cods;
 	}
+	
+	public void setImpuestos(Vector<Impuesto> imp){
+		impuestos=imp;
+		
+	}
+	public List<Impuesto> getImpuestos(){
+		return impuestos;
+	}
+	public void setImpuesto(List<Impuesto> imp){
+		impuestos=imp;
+	}
+	
+	
 	public void setId(int c){
 		codigo=c;
 	}

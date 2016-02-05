@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2015-11-16T18:57:22 -->
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-02-04T11:41:17 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteExistencia" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -87,21 +87,21 @@ FROM v_existencia]]>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[La Masica, Atlantida, B° Suyapa, Gasolinera Puma San Juan]]></text>
+				<text><![CDATA[WEST END CALLE PRINCIPAL, ROATAN, ISLA DE LA BAHIA.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="3" width="570" height="23" uuid="3c2bd69a-9200-41f6-af53-6a56715225f5"/>
 				<textElement textAlignment="Center">
 					<font size="13"/>
 				</textElement>
-				<text><![CDATA[INVERSIONES DEL ATLANTICO S DE R.L.]]></text>
+				<text><![CDATA[SONRISA HOTEL GROUP S.A.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="32" width="572" height="14" uuid="a1709503-4ace-42cf-9af1-2a4b0fbe7a50"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Telefono (504) 2436-3144    RTN 01059014682319]]></text>
+				<text><![CDATA[TELEFONO (504) 2445-1529   RTN 08019003423927]]></text>
 			</staticText>
 		</band>
 	</title>

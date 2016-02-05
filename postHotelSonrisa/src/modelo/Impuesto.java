@@ -3,11 +3,17 @@ package modelo;
 public class Impuesto {
 	private int  id;
 	private String  porcentaje;
+	private boolean agregado=false;
 	
 	public Impuesto(){
 		
 	}
-	
+	public void setAccion(boolean add){
+		agregado=add;
+	}
+	public boolean getAccion(){
+		return agregado;
+	}
 	public Impuesto(int  i,String  p){
 		id=i;
 		porcentaje=p;

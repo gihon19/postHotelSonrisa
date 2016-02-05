@@ -31,6 +31,7 @@ public class CtlCobro implements ActionListener, KeyListener {
 	
 	private ReciboPago myRecibo=null;
 	private ReciboPagoDao myReciboDao=null;
+	private boolean resul=false;
 
 	public CtlCobro(ViewCobro v,Conexion conn) {
 		view=v;
@@ -41,6 +42,9 @@ public class CtlCobro implements ActionListener, KeyListener {
 		myReciboDao=new ReciboPagoDao(conexion);
 		myRecibo=new ReciboPago();
 		view.setVisible(true);
+	}
+	public boolean getResultado(){
+		return resul;
 	}
 
 	@Override
@@ -197,38 +201,83 @@ switch(e.getKeyCode()){
 		viewListaCliente.dispose();
 		ctlBuscarCliente=null;
 	}
+	public ReciboPago getRecibo(){
+		return this.myRecibo;
+	}
 	
 	private void cobrar() {
 		
 			setRecibo();
-			//se manda aguardar el recibo con los pagos realizados
-			boolean resul=this.myReciboDao.registrar(myRecibo);
-			
-			if(resul){
+			if(this.validar()){
+				//se manda aguardar el recibo con los pagos realizados
+				boolean resul=this.myReciboDao.registrar(myRecibo);
 				
-				myRecibo.setNoRecibo(myReciboDao.idUltimoRecibo);
-				
-				JOptionPane.showMessageDialog(view, "El recibo se guardo correctamente.");
-				this.view.setVisible(false);
-				
-				
-				try {
-				
-					AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 5, myRecibo.getNoRecibo());
-					//AbstractJasperReports.showViewer(view);
-					AbstractJasperReports.showViewer(view);
+				if(resul){
 					
-					//myFactura.
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}else{//
-				JOptionPane.showMessageDialog(view, "El recibo no se guardo correctamente.");
-			}//fin del if que verefica la acccion de guardar el recibo
+					resul=true;
+					myRecibo.setNoRecibo(myReciboDao.idUltimoRecibo);
+					
+					JOptionPane.showMessageDialog(view, "El recibo se guardo correctamente.");
+					this.view.setVisible(false);
+					
+					
+					try {
+					
+						//AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 5, myRecibo.getNoRecibo());
+						AbstractJasperReports.createReportReciboCobroCaja(conexion.getPoolConexion().getConnection(), myRecibo.getNoRecibo());
+						//AbstractJasperReports.showViewer(view);
+						AbstractJasperReports.showViewer(view);
+						
+						
+						//myFactura.
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}else{//
+					JOptionPane.showMessageDialog(view, "El recibo no se guardo.");
+				}//fin del if que verefica la acccion de guardar el recibo
+		}
 		
 		
+	}
+	
+	public boolean validar(){
+		boolean comprobado=false;
+		//Double saldo=0.0;
+		//Double pago=0.0;
+		if(view.getTxtNombrecliente().getText().trim().length()==0){
+			JOptionPane.showMessageDialog(view, "El no existe el cliente");
+		}
+		else
+			if(view.getTxtLimiteCredito().getText().trim().length()==0){
+				JOptionPane.showMessageDialog(view, "El cliente no tiene credito");
+				//view.getTxtCantidad().requestFocusInWindow();
+			}else
+				if(view.getTxtTotal().getText().trim().length()==0){
+					JOptionPane.showMessageDialog(view, "Debe rellenar todos los campos");
+					view.getTxtTotal().requestFocusInWindow();
+				}else
+					if(view.getTxtSaldo().getText().trim().length()==0){
+						JOptionPane.showMessageDialog(view, "El cliente no tiene saldo pendiente");	
+					}
+					else
+						if(Double.parseDouble(view.getTxtTotal().getText())==0){
+							JOptionPane.showMessageDialog(view, "Coloque la cantidad a cobrar");
+							view.getTxtTotal().requestFocusInWindow();
+						}
+						else{
+						
+							/*saldo=Double.parseDouble(view.getTxtSaldo().getText());
+							pago=Double.parseDouble(view.getTxtTotal().getText());
+							
+							if()*/
+						
+							comprobado=true;
+						}
+			
+		return comprobado;
 	}
 	private void setRecibo() {
 		// TODO Auto-generated method stub

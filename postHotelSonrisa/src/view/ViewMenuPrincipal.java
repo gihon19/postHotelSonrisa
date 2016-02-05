@@ -85,9 +85,9 @@ public class ViewMenuPrincipal extends JFrame {
 		
 		mntmMarcas = new JMenuItem("Marcas");
 		mnInventario.add(mntmMarcas);
-		
+		/*
 		mntmProgramarPrecios = new JMenuItem("Programar Precios");
-		mnInventario.add(mntmProgramarPrecios);
+		mnInventario.add(mntmProgramarPrecios);*/
 		
 		mnRequisiciones = new JMenu("Requisiciones");
 		mnInventario.add(mnRequisiciones);
@@ -138,18 +138,19 @@ public class ViewMenuPrincipal extends JFrame {
 		mntmDeclaracionDei = new JMenuItem("Declaracion DEI");
 		mnReportes.add(mntmDeclaracionDei);
 		
+		/*
 		JMenu mnCuentasPorPagar = new JMenu("Cuentas Por Pagar");
-		menuBar.add(mnCuentasPorPagar);
+		menuBar.add(mnCuentasPorPagar);*/
 		
 		mntmInventario = new JMenuItem("Inventario");
 		mnReportes.add(mntmInventario);
 		
 		mntmCierresDeCaja = new JMenuItem("Cierres de caja");
 		mnReportes.add(mntmCierresDeCaja);
-		
+		/*
 		JMenuItem mntmFacturasPendientes = new JMenuItem("Facturas pendientes");
 		mnCuentasPorPagar.add(mntmFacturasPendientes);
-		
+		*/
 		JMenuItem mntmAcercaDe = new JMenuItem("Acerca de..");
 		menuBar.add(mntmAcercaDe);
 		setSize(1024,700);
@@ -226,8 +227,9 @@ public class ViewMenuPrincipal extends JFrame {
 		mntmListaPagos.addActionListener(c);
 		mntmListaPagos.setActionCommand("LISTAPAGOS");
 		
+		/*
 		mntmProgramarPrecios.addActionListener(c);
-		mntmProgramarPrecios.setActionCommand("PROGRAMARPRECIOS");
+		mntmProgramarPrecios.setActionCommand("PROGRAMARPRECIOS");*/
 		
 		
 		mntmDeclaracionDei.addActionListener(c);

@@ -55,7 +55,7 @@ public class CtlSalidaCaja implements ActionListener {
 						//JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
 						
 						view.setVisible(false);
-						
+						AbstractJasperReports.imprimierFactura();
 						AbstractJasperReports.showViewer(view);
 						
 						//this.view.setModal(false);

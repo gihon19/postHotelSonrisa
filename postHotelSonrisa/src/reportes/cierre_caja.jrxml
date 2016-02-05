@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.1.final using JasperReports Library version 6.1.1  -->
-<!-- 2016-01-26T23:38:12 -->
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-02-04T11:34:38 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cierre_caja" pageWidth="216" pageHeight="720" columnWidth="190" leftMargin="16" rightMargin="10" topMargin="20" bottomMargin="20" isIgnorePagination="true" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2xpbmljYS52X2NpZXJyZV9jYWphIEFTICw4Nyw2NyxiYWZiN2E1Yi1jZWEzLTRlNTMtOGJiOS1i&#xA;NzhiNzk3ODJlODI7"/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
@@ -83,7 +83,7 @@ WHERE
 	<title>
 		<band height="121" splitType="Stretch">
 			<staticText>
-				<reportElement style="Title" x="0" y="72" width="188" height="16" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
+				<reportElement style="Title" x="0" y="65" width="188" height="16" uuid="bc1ce1da-8232-46ea-be55-cec4abb986dd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Monospaced" size="12" isBold="false"/>
 				</textElement>
@@ -118,21 +118,21 @@ WHERE
 				<text><![CDATA[CAJERO:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="53" width="185" height="14" uuid="c0a70c33-644b-4bf3-8759-d1f235bee994"/>
+				<reportElement x="2" y="40" width="185" height="14" uuid="c0a70c33-644b-4bf3-8759-d1f235bee994"/>
 				<textElement textAlignment="Center">
 					<font fontName="Monospaced" size="10"/>
 				</textElement>
-				<text><![CDATA[RTN 01071983020630]]></text>
+				<text><![CDATA[RTN 08019003423927]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="2" y="14" width="186" height="45" uuid="4a4cdc7a-8426-4a95-aebf-24c3dedb4ed3">
+				<reportElement x="2" y="14" width="186" height="26" uuid="4a4cdc7a-8426-4a95-aebf-24c3dedb4ed3">
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center">
 					<font fontName="Monospaced" size="10"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
-				<text><![CDATA[SAN JUAN PUEBLO, LA MASICA, ATLANTIDA, BO EL CENTRO, FTE AL PARQUE.]]></text>
+				<text><![CDATA[WEST END CALLE PRINCIPAL, ROATAN, ISLA DE LA BAHIA.]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="2" y="2" width="186" height="15" uuid="151596b2-12d5-4eb0-b122-d413022033cb">
@@ -141,7 +141,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font fontName="Monospaced" size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[SUPERMERCADO CANALES]]></text>
+				<text><![CDATA[SONRISA HOTEL GROUP S.A.]]></text>
 			</staticText>
 		</band>
 	</title>

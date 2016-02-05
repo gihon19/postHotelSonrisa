@@ -57,7 +57,7 @@ public class ViewCuentaEfectivo extends JDialog {
 		
 		panelAcciones=new PanelPadre();
 		panelAcciones.setBorder(new TitledBorder(new LineBorder(new Color(130, 135, 144)), "Opciones", TitledBorder.LEFT, TitledBorder.TOP, null, new Color(0, 0, 0)));
-		panelAcciones.setBounds(10, 11, 102, 227);
+		panelAcciones.setBounds(10, 11, 118, 227);
 		panelAcciones.setLayout(null);
 		//panelAcciones.setVisible(false);
 		
@@ -68,7 +68,7 @@ public class ViewCuentaEfectivo extends JDialog {
 		
 		btnGuardar = new BotonGuardar();
 		btnGuardar.setText("F1 Guardar");
-		btnGuardar.setSize(80, 70);
+		btnGuardar.setSize(101, 70);
 		//btnCierre.setText("Guardar");
 		btnGuardar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnGuardar.setLocation(11, 14);
@@ -78,14 +78,14 @@ public class ViewCuentaEfectivo extends JDialog {
 		btnMostrar = new BotonBuscar1();
 		btnMostrar.setText("F2 Mostrar");
 		btnMostrar.setHorizontalAlignment(SwingConstants.LEFT);
-		btnMostrar.setBounds(11, 82, 80, 70);
+		btnMostrar.setBounds(11, 82, 101, 70);
 		
 		panelAcciones.add(btnMostrar);
 		
 		btnCerrar = new BotonCancelar();
 		btnCerrar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCerrar.setText("Esc Cerrar");
-		btnCerrar.setBounds(11, 150, 80, 70);
+		btnCerrar.setBounds(11, 150, 101, 70);
 		panelAcciones.add(btnCerrar);
 		
 		txtUno = new JTextField();

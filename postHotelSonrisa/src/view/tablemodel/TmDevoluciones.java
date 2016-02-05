@@ -13,7 +13,7 @@ import modelo.DetalleFactura;
 public class TmDevoluciones extends AbstractTableModel {
 
 	final private String []columnNames= {
-			"Id Articulo", "Articulo", "Precio Unidad", "Cantidad","SubTotal","Impuesto","Descuento", "Total","¿Devolucion?"
+			"Id Articulo", "Articulo", "Precio Unidad", "Cantidad","SubTotal","Impuesto","Descuento", "Total","Devolucion?"
 		};
 	private List<DetalleFactura> detallesFactura=new ArrayList<DetalleFactura>();
 	

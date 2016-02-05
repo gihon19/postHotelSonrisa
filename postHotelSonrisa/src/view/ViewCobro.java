@@ -74,24 +74,24 @@ public class ViewCobro extends JDialog {
 		//btnBuscar.getInputMap().put(KeyStroke.getKeyStroke("F1"), sumar());
 		
 		btnCliente = new BotonBuscarClientes();
-		btnCliente.setSize(92, 70);
+		btnCliente.setSize(101, 70);
 		btnCliente.setText("F3 Clientes");
 		btnCliente.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCliente.setLocation(10, 19);
+		btnCliente.setLocation(8, 19);
 		//btnCliente.setBounds(10, 19, 158, 80);
 		panelAcciones.add(btnCliente);
 		
 		btnCobrar = new BotonCobrar();
 		btnCobrar.setText("F2 Cobrar");
 		btnCobrar.setHorizontalAlignment(SwingConstants.LEFT);
-		btnCobrar.setBounds(10, 102, 92, 70);
+		btnCobrar.setBounds(8, 102, 101, 70);
 		
 		panelAcciones.add(btnCobrar);
 		
 		btnCerrar = new BotonCancelar();
 		btnCerrar.setHorizontalAlignment(SwingConstants.LEFT);
 		btnCerrar.setText("Esc Cerrar");
-		btnCerrar.setBounds(10, 185, 92, 70);
+		btnCerrar.setBounds(8, 185, 101, 70);
 		panelAcciones.add(btnCerrar);
 		
 		

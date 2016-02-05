@@ -44,14 +44,17 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 	private Conexion conexion;
 	private ImpuestoDao myImpuestoDao;
 	private PrecioArticuloDao precioDao=null;
+	private ImpuestoDao impuestoDao=null;
 	
 	public CtlArticulo(ViewCrearArticulo view, ArticuloDao a,Conexion conn){
 		conexion=conn;
 		this.view=view;
 		this.myArticuloDao=a;
 		precioDao= new PrecioArticuloDao(conexion);
+		impuestoDao=new ImpuestoDao(conexion);
 		
 		cargarTabla(precioDao.getTipoPrecios());
+		cargarTablaImpuestos(impuestoDao.todoImpuesto());
 		cargarComboBox();
 	}
 	
@@ -62,6 +65,14 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		this.view.getModeloPrecio().limpiar();
 		for(int c=0;c<precios.size();c++){
 			this.view.getModeloPrecio().agregarPrecio(precios.get(c));
+		}
+	}
+	
+	public void cargarTablaImpuestos(List<Impuesto> impuestos){
+		//JOptionPane.showMessageDialog(view, articulos);
+		this.view.getModeloImpuestos().limpiar();
+		for(int c=0;c<impuestos.size();c++){
+			this.view.getModeloImpuestos().agregarImpuesto(impuestos.get(c));
 		}
 	}
 
@@ -96,9 +107,24 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 			//filtrar los codigos de barra del articulo
 			if(this.view.getModeloCodBarra().getSize()==0){
 				int resul=JOptionPane.showConfirmDialog(view, "Desea guardar un articulos sin condigos de barra?");
+				boolean validar=false;
 				if(resul==0){
-					guardarArticulo();
-					this.view.dispose();
+					
+					/*/////////
+					//validar que que tenga que por lo menos un impuesto debe estar selecciona
+					for(int x=0;x<view.getModeloImpuestos().getRowCount();x++)
+					{
+						if(view.getModeloImpuestos().getImpuestos().get(x).getAccion()==true){
+							validar=true;
+						}
+					}
+					
+					//si esta selecciona un impuesto por lo menos entocense se procede a registr
+					if(validar){*/
+						guardarArticulo();
+						this.view.dispose();
+				//	}
+					
 				}
 			}else{
 				guardarArticulo();
@@ -122,7 +148,7 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 				CodBarra cod= this.view.getModeloCodBarra().getCodBarra(indexCodigoSelecionado);
 				
 				//se pregunta si en verdad se quiere borrar el codigo de bgarra
-				int confirmacion=JOptionPane.showConfirmDialog(view, "¿Desea eliminar el codigo de barra "+cod+" ?");
+				int confirmacion=JOptionPane.showConfirmDialog(view, "ï¿½Desea eliminar el codigo de barra "+cod+" ?");
 				
 				// si se confirma la eliminacion se procede a eliminar
 				if(confirmacion==0){
@@ -184,7 +210,7 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		//se ejecuta la accion de guardar
 		if(myArticuloDao.registrarArticulo(myArticulo)){
 			
-			JOptionPane.showMessageDialog(this.view, "Se ha registrado Exitosamente","Información",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(this.view, "Se ha registrado Exitosamente","Informaciï¿½n",JOptionPane.INFORMATION_MESSAGE);
 			myArticulo.setId(myArticuloDao.getIdArticuloRegistrado());//se completa el proveedor guardado con el ID asignado por la BD
 			resultaOperacion=true;
 			this.view.setVisible(false);
@@ -207,6 +233,13 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		Impuesto imp= (Impuesto) this.view.getCbxImpuesto().getSelectedItem();
 		myArticulo.setImpuestoObj(imp);
 		
+		//se agregan los impuesto selecciona a al articulo
+		for(int x=0; x<view.getModeloImpuestos().getRowCount();x++){
+			//si esta selecciona el impuesto se agrega al articulo
+			if(view.getModeloImpuestos().getImpuestos().get(x).getAccion()==true)
+				myArticulo.getImpuestos().add(view.getModeloImpuestos().getImpuestos().get(x));
+		}
+		
 		//JOptionPane.showMessageDialog(view, this.view.getCbxTipo().getSelectedItem());
 		//Se establece los codigos de barra
 		myArticulo.setCodBarras(this.view.getModeloCodBarra().getCodsBarras());
@@ -223,6 +256,9 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		}
 		if(x==1){
 			myArticulo.setTipoArticulo(2);
+		}
+		if(x==2){
+			myArticulo.setTipoArticulo(3);
 		}
 	}
 	
@@ -249,11 +285,13 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 			this.view.getModeloCodBarra().setCodsBarra(a.getCodBarra());
 		}
 		
-		
+	
 		//se consigue el index del impuesto del articulo
 		int indexImpuesto=this.view.getListaCbxImpuesto().buscarImpuesto(a.getImpuestoObj());
 		//se selecciona el impuesto apropiado para el articulo
 		this.view.getCbxImpuesto().setSelectedIndex(indexImpuesto);
+		//view.getModeloImpuestos().selectImpuesto(a.getImpuestos());
+		
 		
 		
 		//se establece el articulo de la clase this
@@ -266,9 +304,19 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		if(a.getTipoArticulo()==1){
 			this.view.getCbxTipo().setSelectedIndex(0);
 		}
-		if(a.getTipoArticulo()==2){
-			this.view.getCbxTipo().setSelectedIndex(1);
-		}
+		else
+			if(a.getTipoArticulo()==2){
+				this.view.getCbxTipo().setSelectedIndex(1);
+			}
+			else
+				if(a.getTipoArticulo()==3){
+					this.view.getCbxTipo().setSelectedIndex(2);
+				}
+		//carga todos los impuesto
+		this.cargarTablaImpuestos(this.impuestoDao.todoImpuesto());
+		
+		//se seleccion solo los impuesto que tiene el impuesto
+		
 		//se cargar los precios de los articulos si los hay
 		this.cargarTabla(this.precioDao.getPreciosArticulo(myArticulo.getId()));
 				
@@ -298,26 +346,26 @@ public class CtlArticulo extends MouseAdapter implements ActionListener,KeyListe
 		this.view.getCbxImpuesto().setSelectedIndex(1);
 	}
 	
-	 // maneja el evento de oprimir el botón del ratón
+	 // maneja el evento de oprimir el botï¿½n del ratï¿½n
 	public void mousePressed( MouseEvent evento )
 	{
 		check(evento);
 		checkForTriggerEvent( evento ); // comprueba el desencadenador
-	} // fin del método mousePressed
+	} // fin del mï¿½todo mousePressed
 	
-	// maneja el evento de liberación del botón del ratón
+	// maneja el evento de liberaciï¿½n del botï¿½n del ratï¿½n
 	public void mouseReleased( MouseEvent evento )
 	{
 		check(evento);
 		checkForTriggerEvent( evento ); // comprueba el desencadenador
-	} // fin del método mouseReleased
+	} // fin del mï¿½todo mouseReleased
 	
-	// determina si el evento debe desencadenar el menú contextual
+	// determina si el evento debe desencadenar el menï¿½ contextual
 	private void checkForTriggerEvent( MouseEvent evento )
 	{
 		if ( evento.isPopupTrigger() )
 			this.view.getMenuContextual().show(evento.getComponent(), evento.getX(), evento.getY() );
-	} // fin del método checkForTriggerEvent
+	} // fin del mï¿½todo checkForTriggerEvent
 	
 	public void check(MouseEvent e)
 	{ 

@@ -13,8 +13,12 @@ public class Factura {
 	private List<DetalleFactura> detalles=new ArrayList<DetalleFactura>();
 	private BigDecimal totalImpuesto=new BigDecimal(0.0);
 	private BigDecimal totalImpuesto18=new BigDecimal(0.0);
+	private BigDecimal totalOtrosImpuesto=new BigDecimal(0.0);
 	private BigDecimal total=new BigDecimal(0.0);
 	private BigDecimal subTotal=new BigDecimal(0.0);
+	private BigDecimal subTotal15=new BigDecimal(0.0);
+	private BigDecimal subTotal18=new BigDecimal(0.0);
+	private BigDecimal subTotalExcento=new BigDecimal(0.0);
 	private BigDecimal totalDescuento=new BigDecimal(0.0);
 	private String fechaVencimento=null;
 	private String estado;
@@ -137,6 +141,12 @@ public class Factura {
 	public BigDecimal getTotalImpuesto(){
 		return totalImpuesto;
 	}
+	public void setTotalOtrosImpuesto(BigDecimal tImp){
+		totalOtrosImpuesto=totalOtrosImpuesto.add(tImp);
+	}
+	public BigDecimal getTotalOtrosImpuesto1(){
+		return totalOtrosImpuesto;
+	}
 	public void setTotalImpuesto18(BigDecimal tImp){
 		totalImpuesto18=totalImpuesto18.add(tImp);
 	}
@@ -158,6 +168,27 @@ public class Factura {
 		return subTotal;
 	}
 	
+	public void setSubTotal15(BigDecimal s){
+		subTotal15=subTotal15.add(s);
+	}
+	public BigDecimal getSubTotal15(){
+		return subTotal15;
+	}
+	public void setSubTotal18(BigDecimal s){
+		subTotal18=subTotal18.add(s);
+	}
+	public BigDecimal getSubTotal18(){
+		return subTotal18;
+	}
+	public void setSubTotalExcento(BigDecimal s){
+		subTotalExcento=subTotalExcento.add(s);
+	}
+	public BigDecimal getSubTotalExcento(){
+		return subTotalExcento;
+	}
+	
+	
+	
 	public void setTotalDescuento(BigDecimal s){
 		totalDescuento=totalDescuento.add(s);
 	}
@@ -169,8 +200,12 @@ public class Factura {
 		totalImpuesto=BigDecimal.ZERO;
 		total=BigDecimal.ZERO;
 		subTotal=BigDecimal.ZERO;
+		subTotal18=BigDecimal.ZERO;
+		subTotal15=BigDecimal.ZERO;
+		subTotalExcento=BigDecimal.ZERO;
 		totalDescuento=BigDecimal.ZERO;
 		totalImpuesto18=BigDecimal.ZERO;
+		totalOtrosImpuesto=BigDecimal.ZERO;
 	}
 	@Override
 	public String toString(){

@@ -31,9 +31,11 @@ import view.botones.BotonGuardar;
 import view.rendes.PanelPadre;
 import view.rendes.RenderizadorTablaFactura;
 import view.rendes.RoundJTextField;
+import view.rendes.RtImpuestos;
 import view.rendes.RtPrecios;
 import view.tablemodel.ComboBoxImpuesto;
 import view.tablemodel.ListaModeloCodBarra;
+import view.tablemodel.TmImpuestos;
 import view.tablemodel.TmPrecios;
 
 import javax.swing.JTable;
@@ -61,6 +63,7 @@ public class ViewCrearArticulo extends JDialog {
 	private JTextField txtCodigo;
 	private JComboBox cbxTipo;
 	private TmPrecios modeloPrecio;
+	private TmImpuestos modeloImpuestos;
 	
 	
 	private JMenuItem mntmEliminar;
@@ -78,7 +81,9 @@ public class ViewCrearArticulo extends JDialog {
 	private ListaModeloCodBarra modeloCodBarra;
 	private JTextField txtPrecio;
 	private JTable tblPrecios;
+	private JTable tblImpuestos;
 	private JScrollPane scrollPane_1;
+	private JScrollPane scrollPane_2;
 	private JPanel panel;
 	private JPanel panel_1;
 	private Color colorBorde;
@@ -101,7 +106,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		colorBorde=Color.DARK_GRAY;
 		
 		
-		menuContextual = new JPopupMenu(); // crea el menú contextual
+		menuContextual = new JPopupMenu(); // crea el menï¿½ contextual
 		
 		//opcion del menu flotante
 		mntmEliminar = new JMenuItem("Eliminar");
@@ -116,7 +121,11 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		modeloCodBarra=new ListaModeloCodBarra();
 		this.modeloPrecio=new TmPrecios();
 		
+		this.modeloImpuestos=new TmImpuestos();
+		
 		RtPrecios renderizador = new RtPrecios();
+		RtImpuestos renderizador2= new RtImpuestos();
+		
 		
 		panel = new PanelPadre();
 		panel.setBorder(BorderFactory.createCompoundBorder(
@@ -157,7 +166,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		cbxTipo = new JComboBox();
 		cbxTipo.setBounds(23, 28, 289, 32);
 		panel_1.add(cbxTipo);
-		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Bienes", "Servicio"}));
+		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Bienes", "Servicio","Servicio Turistico"}));
 		
 		panel_2 = new PanelPadre();
 		panel_2.setBorder(BorderFactory.createCompoundBorder(
@@ -190,14 +199,14 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_3.setBounds(0, 222, 341, 76);
+		panel_3.setBounds(0, 222, 341, 143);
 		getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 		
 		
 		//Impuesto
 		lblImpuesto = new JLabel("Impuesto");
-		lblImpuesto.setBounds(23, 4, 89, 23);
+		lblImpuesto.setBounds(16, 6, 89, 23);
 		panel_3.add(lblImpuesto);
 		lblImpuesto.setFont(myFont);
 		
@@ -205,9 +214,10 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		
 		cbxImpuesto = new JComboBox();
+		//cbxImpuesto.setVisible(false);
 		modeloImpuesto=new ComboBoxImpuesto();
-		cbxImpuesto.setModel(modeloImpuesto);//para poder mostrar el formulario en modo diseño comente esta linea
-		cbxImpuesto.setBounds(23, 31, 289, 32);
+		cbxImpuesto.setModel(modeloImpuesto);//para poder mostrar el formulario en modo diseï¿½o comente esta linea
+		cbxImpuesto.setBounds(33, 39, 289, 32);
 		panel_3.add(cbxImpuesto);
 		cbxImpuesto.setFont(myFont);
 		
@@ -216,7 +226,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_4.setBounds(0, 288, 341, 153);
+		panel_4.setBounds(0, 363, 341, 153);
 		getContentPane().add(panel_4);
 		panel_4.setLayout(null);
 		
@@ -246,13 +256,20 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.WHITE),
 	              BorderFactory.createMatteBorder(0, 0, 2, 2, Color.GRAY)
 	              ));
-		panel_5.setBounds(0, 434, 341, 132);
+		panel_5.setBounds(0, 515, 341, 132);
 		getContentPane().add(panel_5);
 		panel_5.setLayout(null);
 		//tblPrecios.setBounds(118, 362, 1, 1);
 		//getContentPane().add(table);
 		
+		/*tblImpuestos=new JTable();
+		tblImpuestos.setModel(modeloImpuestos);
+		tblImpuestos.setDefaultRenderer(String.class, renderizador2);
 		
+		scrollPane_2 = new JScrollPane(tblImpuestos);
+		scrollPane_2.setBounds(16, 27, 289, 99);    
+		//scrollPane_1.setBounds(23, 32, 289, 90);
+		panel_3.add(scrollPane_2);*/
 		
 		tblPrecios = new JTable();
 		tblPrecios.setBounds(118, 350, 257, 56);
@@ -270,7 +287,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		lblOtrosPrecios.setFont(myFont);
 		
 		panel_6 = new PanelPadre();
-		panel_6.setBounds(0, 564, 341, 101);
+		panel_6.setBounds(0, 647, 341, 101);
 		getContentPane().add(panel_6);
 		panel_6.setLayout(null);
 		
@@ -302,7 +319,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		lblPrecio.setVisible(false);
 		btnActualizar.setVisible(false);
 		
-		setSize(347,694);
+		setSize(343,770);
 		
 		//centrar la ventana en la pantalla
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
@@ -327,7 +344,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		colorBorde=Color.LIGHT_GRAY;
 		
 		
-		menuContextual = new JPopupMenu(); // crea el menú contextual
+		menuContextual = new JPopupMenu(); // crea el menï¿½ contextual
 		
 		//opcion del menu flotante
 		mntmEliminar = new JMenuItem("Eliminar");
@@ -345,7 +362,7 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		cbxImpuesto = new JComboBox();
 		modeloImpuesto=new ComboBoxImpuesto();
-		//cbxImpuesto.setModel(modeloImpuesto);//para poder mostrar el formulario en modo diseño comente esta linea
+		//cbxImpuesto.setModel(modeloImpuesto);//para poder mostrar el formulario en modo diseï¿½o comente esta linea
 		cbxImpuesto.setBounds(10, 200, 257, 23);
 		cbxImpuesto.setFont(myFont);
 		getContentPane().add(cbxImpuesto);
@@ -525,6 +542,14 @@ super(view,"Agregar Articulos",Dialog.ModalityType.DOCUMENT_MODAL);
 		
 		mntmImprimir.addActionListener(m);
 		mntmImprimir.setActionCommand("IMPRIMIR");
+	}
+	
+	
+	public TmImpuestos getModeloImpuestos(){
+		return modeloImpuestos;
+	}
+	public JTable getTablaImpuestos(){
+		return this.tblImpuestos;
 	}
 	public TmPrecios getModeloPrecio(){
 		return modeloPrecio;

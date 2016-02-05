@@ -58,7 +58,7 @@ public class ClienteDao {
 		try {
 			conn = conexion.getPoolConexion().getConnection();
 			
-			seleccionarTodasLosClientes = conn.prepareStatement("SELECT * FROM v_clientes;");
+			seleccionarTodasLosClientes = conn.prepareStatement("SELECT * FROM v_clientes where tipo_cliente=2;");
 			
 			res = seleccionarTodasLosClientes.executeQuery();
 			while(res.next()){
@@ -114,7 +114,7 @@ public class ClienteDao {
 		boolean existe=false;
 		try {
 			conn=conexion.getPoolConexion().getConnection();
-			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where rtn LIKE ? ;");
+			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where rtn LIKE ? and tipo_cliente=2;");
 		
 			buscarClienteNombre.setString(1, "%" + busqueda + "%");
 			res = buscarClienteNombre.executeQuery();
@@ -168,7 +168,7 @@ public class ClienteDao {
 		boolean existe=false;
 		try {
 			conn=conexion.getPoolConexion().getConnection();
-			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where nombre_cliente LIKE ? ;");
+			buscarClienteNombre=conn.prepareStatement("SELECT * FROM v_clientes where nombre_cliente LIKE ? and tipo_cliente=2 ;");
 		
 			buscarClienteNombre.setString(1, "%" + busqueda + "%");
 			res = buscarClienteNombre.executeQuery();
@@ -233,7 +233,7 @@ public class ClienteDao {
 		try {
 			con = conexion.getPoolConexion().getConnection();
 			
-			buscarClienteID=con.prepareStatement("SELECT * FROM v_clientes where codigo_cliente=?");
+			buscarClienteID=con.prepareStatement("SELECT * FROM v_clientes where codigo_cliente=? and tipo_cliente=2;");
 			
 			buscarClienteID.setInt(1, id);
 			res=buscarClienteID.executeQuery();
@@ -317,13 +317,23 @@ public class ClienteDao {
 		
 		try {
 			conn=conexion.getPoolConexion().getConnection();
-			actualizarCliente=conn.prepareStatement("UPDATE cliente SET nombre_cliente = ?, direccion = ? ,telefono = ?, movil=?, rtn=? WHERE codigo_cliente = ?");
+			
+			actualizarCliente=conn.prepareStatement("UPDATE cliente SET nombre_cliente = ?, direccion = ? ,telefono = ?, movil=?, rtn=?,limite_credito=? WHERE codigo_cliente = ?");
 			actualizarCliente.setString(1,cliente.getNombre());
 			actualizarCliente.setString(2, cliente.getDereccion());
 			actualizarCliente.setString(3, cliente.getTelefono());
 			actualizarCliente.setString(4, cliente.getCelular());
 			actualizarCliente.setString(5,cliente.getRtn());
-			actualizarCliente.setInt(6,cliente.getId());
+			actualizarCliente.setBigDecimal(6, cliente.getLimiteCredito());
+			actualizarCliente.setInt(7,cliente.getId());
+			
+			/*actualizarCliente=conn.prepareStatement("UPDATE cliente SET nombre_cliente = ?, direccion = ? ,telefono = ?, movil=?, rtn=? WHERE codigo_cliente = ?");
+			actualizarCliente.setString(1,cliente.getNombre());
+			actualizarCliente.setString(2, cliente.getDereccion());
+			actualizarCliente.setString(3, cliente.getTelefono());
+			actualizarCliente.setString(4, cliente.getCelular());
+			actualizarCliente.setString(5,cliente.getRtn());
+			actualizarCliente.setInt(6,cliente.getId());*/
 			
 			resultado=actualizarCliente.executeUpdate();
 			//JOptionPane.showMessageDialog(null, a+","+resultado );
@@ -350,6 +360,57 @@ public class ClienteDao {
 		} // fin de finally
 	}
 	
+	
+	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
+	public boolean registrarClienteContado(Cliente myCliente)
+	{
+		//JOptionPane.showConfirmDialog(null, myCliente);
+		int resultado=0;
+		ResultSet rs=null;
+		Connection con = null;
+		
+		try 
+		{
+			con = conexion.getPoolConexion().getConnection();
+			
+			insertarNuevaCliente=con.prepareStatement( "INSERT INTO cliente(nombre_cliente,direccion,telefono,movil,rtn,limite_credito) VALUES (?,?,?,?,?,?)");
+			
+			insertarNuevaCliente.setString( 1, myCliente.getNombre() );
+			insertarNuevaCliente.setString( 2, myCliente.getDereccion() );
+			insertarNuevaCliente.setString( 3, myCliente.getTelefono());
+			insertarNuevaCliente.setString(4, myCliente.getCelular());
+			insertarNuevaCliente.setString(5, myCliente.getRtn());
+			insertarNuevaCliente.setBigDecimal(6, myCliente.getLimiteCredito());
+			
+			resultado=insertarNuevaCliente.executeUpdate();
+			
+			rs=insertarNuevaCliente.getGeneratedKeys(); //obtengo las ultimas llaves generadas
+			while(rs.next()){
+				this.setIdClienteRegistrado(rs.getInt(1));
+			}
+			
+			return true;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+			//conexion.desconectar();
+            return false;
+		}
+		finally
+		{
+			try{
+				if(rs!=null)rs.close();
+				 if(insertarNuevaCliente != null)insertarNuevaCliente.close();
+	              if(con != null) con.close();
+			} // fin de try
+			catch ( SQLException excepcionSql )
+			{
+				excepcionSql.printStackTrace();
+				//conexion.desconectar();
+			} // fin de catch
+		} // fin de finally
+	}
+	
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	public boolean registrarCliente(Cliente myCliente)
 	{
@@ -362,13 +423,23 @@ public class ClienteDao {
 		{
 			con = conexion.getPoolConexion().getConnection();
 			
-			insertarNuevaCliente=con.prepareStatement( "INSERT INTO cliente(nombre_cliente,direccion,telefono,movil,rtn) VALUES (?,?,?,?,?)");
+			//insertarNuevaCliente=con.prepareStatement( "INSERT INTO cliente(nombre_cliente,direccion,telefono,movil,rtn) VALUES (?,?,?,?,?)");
+			insertarNuevaCliente=con.prepareStatement( "INSERT INTO cliente(nombre_cliente,direccion,telefono,movil,rtn,limite_credito,tipo_cliente) VALUES (?,?,?,?,?,?,?)");
+			
 			
 			insertarNuevaCliente.setString( 1, myCliente.getNombre() );
 			insertarNuevaCliente.setString( 2, myCliente.getDereccion() );
 			insertarNuevaCliente.setString( 3, myCliente.getTelefono());
 			insertarNuevaCliente.setString(4, myCliente.getCelular());
 			insertarNuevaCliente.setString(5, myCliente.getRtn());
+			insertarNuevaCliente.setBigDecimal(6, myCliente.getLimiteCredito());
+			insertarNuevaCliente.setInt(7, 2);
+			
+			/*insertarNuevaCliente.setString( 1, myCliente.getNombre() );
+			insertarNuevaCliente.setString( 2, myCliente.getDereccion() );
+			insertarNuevaCliente.setString( 3, myCliente.getTelefono());
+			insertarNuevaCliente.setString(4, myCliente.getCelular());
+			insertarNuevaCliente.setString(5, myCliente.getRtn());*/
 			
 			resultado=insertarNuevaCliente.executeUpdate();
 			

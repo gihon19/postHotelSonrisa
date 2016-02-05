@@ -6,6 +6,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.math.BigDecimal;
 
+import javax.swing.JOptionPane;
+
+import modelo.CierreCaja;
+import modelo.Conexion;
+import modelo.dao.CierreCajaDao;
 import view.ViewCuentaEfectivo;
 
 public class CtlContarEfectivo implements ActionListener, KeyListener{
@@ -23,12 +28,21 @@ public class CtlContarEfectivo implements ActionListener, KeyListener{
 	private BigDecimal cincuenta=new BigDecimal(0.0);
 	private BigDecimal cien=new BigDecimal(0.0);
 	private BigDecimal quinientos=new BigDecimal(0.0);
+	private Conexion conexion;
 
-	public CtlContarEfectivo(ViewCuentaEfectivo v) {
+	private boolean resultado;
+
+	public CtlContarEfectivo(ViewCuentaEfectivo v,Conexion conn) {
+		
+		conexion=conn;
 		// TODO Auto-generated constructor stub
 		view=v;
 		view.conectarControlador(this);
 		view.setVisible(true);
+	}
+	
+	public boolean getEstado(){
+		return resultado;
 	}
 
 	@Override
@@ -41,6 +55,10 @@ public class CtlContarEfectivo implements ActionListener, KeyListener{
 			setTotal();
 			break;
 		case "MOSTRAR":
+			CierreCajaDao cierreDao=new CierreCajaDao(conexion);
+			CierreCaja unCierre=cierreDao.getCierre(1);
+			
+			JOptionPane.showMessageDialog(view, "Las ventas del usuario son: L. "+unCierre.getEfectivo());
 			break;
 		case "SALIR":
 			view.setVisible(false);
@@ -73,6 +91,8 @@ public class CtlContarEfectivo implements ActionListener, KeyListener{
 		
 		quinientos=new BigDecimal(view.getTxtQuiniento().getText());
 		total=total.add(quinientos.multiply(new BigDecimal(500)));
+		
+		this.resultado=true;
 		
 		view.setVisible(false);
 		

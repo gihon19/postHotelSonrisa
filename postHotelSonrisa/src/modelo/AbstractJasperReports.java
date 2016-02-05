@@ -66,6 +66,7 @@ public abstract class AbstractJasperReports
 	private static InputStream cierresCaja=null;
 	private static InputStream salidaCaja=null;
 	private static InputStream kardex=null;
+	private static InputStream cobroCaja=null;
 	
 	private static JasperReport	reportFactura;
 	private static JasperReport	reportFacturaCompra;
@@ -79,13 +80,14 @@ public abstract class AbstractJasperReports
 	private static JasperReport	reportCierresCaja;
 	private static JasperReport	reportSalidaCaja;
 	private static JasperReport	reportKardex;
+	private static JasperReport	reportCobroCaja;
 	
 	
 	public static void loadFileReport(){
 		
-		factura=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco2.jasper");
+		factura=AbstractJasperReports.class.getResourceAsStream("/reportes/factura1.jasper");
 		facturaCompra=AbstractJasperReports.class.getResourceAsStream("/reportes/Factura_Compra_Saint_Paul.jasper");
-		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura_texaco_reimpresion2.jasper");
+		facturaReimpresion=AbstractJasperReports.class.getResourceAsStream("/reportes/factura1_reimpresion.jasper");
 		cierreCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cierre_caja.jasper");
 		reciboPago=AbstractJasperReports.class.getResourceAsStream("/reportes/recibo_pago.jasper");
 		Dei=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteDEI.jasper");
@@ -95,6 +97,7 @@ public abstract class AbstractJasperReports
 		cierresCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cierres_caja_expreso.jasper");
 		salidaCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/salida_caja.jasper");
 		kardex=AbstractJasperReports.class.getResourceAsStream("/reportes/ReporteKardex.jasper");
+		cobroCaja=AbstractJasperReports.class.getResourceAsStream("/reportes/cobro_caja.jasper");
 		
 		
 		try {
@@ -110,6 +113,7 @@ public abstract class AbstractJasperReports
 			reportCierresCaja= (JasperReport) JRLoader.loadObject( cierresCaja );
 			reportSalidaCaja= (JasperReport) JRLoader.loadObject( salidaCaja );
 			reportKardex= (JasperReport) JRLoader.loadObject( kardex );
+			reportCobroCaja= (JasperReport) JRLoader.loadObject( cobroCaja );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -164,6 +168,25 @@ public abstract class AbstractJasperReports
 		 
 		 try {
 			reportFilled = JasperFillManager.fillReport( reportCodigoBarra, parametros, conn );
+		} catch (JRException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 try {
+				conn.close();
+			} catch (SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+			}
+	}
+	
+	public static void createReportReciboCobroCaja(Connection conn,int id){
+		 Map parametros = new HashMap();
+		 parametros.put("no_recibo",id);
+		 
+		 
+		 try {
+			reportFilled = JasperFillManager.fillReport( reportCobroCaja, parametros, conn );
 		} catch (JRException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.1.0.final using JasperReports Library version 6.1.0  -->
-<!-- 2015-09-02T23:11:30 -->
+<!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
+<!-- 2016-02-04T11:44:37 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="recibo_pago" pageWidth="612" pageHeight="396" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
 	<property name="com.jaspersoft.studio.data.sql.tables" value="YWRtaW5fdG9vbHMudl9yZWNpYm8gQVMgLDE1NSw3OSw2OTQ1OWEzNy1jOGMxLTQ1NDktYjdjNy01&#xA;MzRjNGViMWQwYzI7"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="clinica data source"/>
@@ -86,32 +86,27 @@ WHERE
 				<text><![CDATA[RECIBO DE PAGO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="13" width="570" height="12" uuid="62ab06e3-8503-4626-af69-a4bfa871b17c"/>
+				<reportElement x="0" y="15" width="570" height="12" uuid="62ab06e3-8503-4626-af69-a4bfa871b17c"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Entrada a Olanchito, Yoro, Honduras, C.A.]]></text>
+				<text><![CDATA[WEST END CALLE PRINCIPAL, ROATAN, ISLA DE LA BAHIA.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="0" width="570" height="23" uuid="3c2bd69a-9200-41f6-af53-6a56715225f5"/>
+				<reportElement x="0" y="0" width="570" height="17" uuid="3c2bd69a-9200-41f6-af53-6a56715225f5">
+					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+				</reportElement>
 				<textElement textAlignment="Center">
 					<font size="13"/>
 				</textElement>
-				<text><![CDATA[Propietario Rafael Armando Paz]]></text>
+				<text><![CDATA[SONRISA HOTEL GROUP S.A.]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="0" y="23" width="570" height="12" uuid="9d982688-d65f-4bf8-9278-8e0aa6805123"/>
+				<reportElement x="0" y="27" width="570" height="14" uuid="a1709503-4ace-42cf-9af1-2a4b0fbe7a50"/>
 				<textElement textAlignment="Center">
 					<font size="9"/>
 				</textElement>
-				<text><![CDATA[Propietario Rafael Armando Paz]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="32" width="570" height="14" uuid="a1709503-4ace-42cf-9af1-2a4b0fbe7a50"/>
-				<textElement textAlignment="Center">
-					<font size="9"/>
-				</textElement>
-				<text><![CDATA[Telefono: (504) 2446-2620   RTN: 18071940003468]]></text>
+				<text><![CDATA[TELEFONO (504) 2445-1529   RTN 08019003423927]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="400" y="84" width="46" height="13" uuid="6df3e918-e6bc-479a-8617-b8f92af3092f"/>
