@@ -83,7 +83,7 @@ public class ViewLogin extends JDialog{
 		txtUser.setBounds(106, 73, 172, 37);
 		panel_1.add(txtUser);
 		txtUser.setToolTipText("Escriba su nombre de usuario");        
-		lblPass = new JLabel("Contraseña: ");
+		lblPass = new JLabel("Password: ");
 		lblPass.setFont(new Font("Tahoma", Font.BOLD, 13));
 		lblPass.setForeground(Color.BLACK);
 		lblPass.setBounds(10, 130, 100, 14);
@@ -92,7 +92,7 @@ public class ViewLogin extends JDialog{
 		txtPass = new JPasswordField(10);
 		txtPass.setBounds(106, 119, 172, 37);
 		panel_1.add(txtPass);
-		txtPass.setToolTipText("Escriba su contraseña");
+		txtPass.setToolTipText("Escriba su contraseï¿½a");
 		
 		//Crear y agregar los botones 
 		btnAceptar = new BotonesApp("Aceptar");

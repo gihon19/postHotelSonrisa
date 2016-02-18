@@ -41,8 +41,8 @@ public class Conexion {
 	   
 	   static String bd = "admin_tools";
 	   static String login = "root";
-	   static String password = "TOSHIBA";
-	   //static String password = "jdmm123.";
+	   //static String password = "TOSHIBA";
+	   static String password = "jdmm123.";
 	   static String url = "jdbc:mysql://localhost:3306/"+bd;
 	   
 	   

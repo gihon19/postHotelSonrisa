@@ -133,8 +133,7 @@ public class CierreCajaDao {
 		 		+ "total_salida=?,  "
 		 		+ "no_cobro_final=?, "
 		 		+ "total_cobro=?,"
-		 		+ "efectivo_caja =? "
-		 		
+		 		+ "efectivo_caja =?  "
 		 		+ " where "
 		 		+ "idCierre=?";
 		 		//+ "

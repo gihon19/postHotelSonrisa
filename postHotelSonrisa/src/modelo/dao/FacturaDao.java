@@ -644,8 +644,14 @@ public class FacturaDao {
 				+ "estado_factura=?,"
 				+ "descuento=?,"
 				+ "tipo_factura=?,"
-				+ "usuario=?"
+				+ "usuario=?,"
+				
+				+ "subtotal_excento=?,"
+				+ "subtotal15=?,"
+				+ "subtotal18=?,"
+				+ "isvOtros=? "
 				+ " WHERE numero_factura = ?";
+		
 		try {
 			conn=conexion.getPoolConexion().getConnection();
 			actualizarTem=conn.prepareStatement(sql);
@@ -661,7 +667,12 @@ public class FacturaDao {
 			
 			actualizarTem.setInt(7, f.getTipoFactura());
 			actualizarTem.setString(8, conexion.getUsuarioLogin().getUser());
-			actualizarTem.setInt(9, f.getIdFactura());
+			
+			actualizarTem.setBigDecimal(9, f.getSubTotalExcento());
+			actualizarTem.setBigDecimal(10, f.getSubTotal15());
+			actualizarTem.setBigDecimal(11, f.getSubTotal18());
+			actualizarTem.setBigDecimal(12, f.getTotalOtrosImpuesto1());
+			actualizarTem.setInt(13, f.getIdFactura());
 			actualizarTem.executeUpdate();
 			
 			detallesDao.eliminarTem(f.getIdFactura());

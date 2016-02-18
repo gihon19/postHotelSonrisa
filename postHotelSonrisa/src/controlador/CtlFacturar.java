@@ -502,6 +502,7 @@ public void calcularTotales(){
 				
 				//se estable el total y impuesto en el modelo
 				myFactura.setTotal(totalItem);
+				
 				if(porcentaImpuesto.intValue()==0){
 					myFactura.setSubTotalExcento(totalsiniva.setScale(2, BigDecimal.ROUND_HALF_EVEN));
 				}else
@@ -674,11 +675,18 @@ public void calcularTotal(DetalleFactura detalle){
 			break;
 			
 		case KeyEvent.VK_F7:
-			cierreCaja();
+			if(view.getBtnActualizar().isEnabled()){
+				actualizar();
+			}
 			break;
 			
 		case KeyEvent.VK_F8:
-			
+			if(filaPulsada>=0 && view.getModeloTabla().getDetalle(filaPulsada).getArticulo().getTipoArticulo()==3 ){
+				String entrada=JOptionPane.showInputDialog("Escriba el precio");
+				
+				 this.view.getModeloTabla().getDetalle(filaPulsada).getArticulo().setPrecioVenta(new Double(entrada));
+				 this.calcularTotales();
+			 }
 			break;
 		case KeyEvent.VK_F9:
 			
@@ -823,7 +831,7 @@ public void calcularTotal(DetalleFactura detalle){
 			
 			if(ctlContar.getEstado())//verifica que se ordeno realizar el cierre
 				if(cierreDao.actualizarCierre(ctlContar.getTotal()))
-				{
+				{ 
 					try {
 						//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
 						AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierreDao.idUltimoRequistro);
