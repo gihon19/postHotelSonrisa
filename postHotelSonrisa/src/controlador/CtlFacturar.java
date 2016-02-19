@@ -14,6 +14,7 @@ import java.sql.SQLException;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -25,6 +26,7 @@ import modelo.dao.CierreCajaDao;
 import modelo.dao.EmpleadoDao;
 import modelo.dao.PrecioArticuloDao;
 import modelo.dao.ReciboPagoDao;
+import modelo.dao.UsuarioDao;
 import modelo.Cliente; 
 import modelo.dao.ClienteDao;
 import modelo.Conexion;
@@ -58,6 +60,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 	private Conexion conexion=null;
 	private int filaPulsada=0;
 	private boolean resultado=false;
+	private UsuarioDao myUsuarioDao=null;
 	
 	private int tipoView=1;
 	private int netBuscar=0;
@@ -81,6 +84,7 @@ public class CtlFacturar  implements ActionListener, MouseListener, TableModelLi
 		myEmpleadoDao=new EmpleadoDao(conexion);
 		preciosDao=new PrecioArticuloDao(conexion);
 		cierreDao=new CierreCajaDao(conexion);
+		myUsuarioDao=new UsuarioDao(conexion);
 		this.setEmptyView();
 		//cargarComboBox();
 		
@@ -823,51 +827,61 @@ public void calcularTotal(DetalleFactura detalle){
 	private void cierreCaja() {
 		// TODO Auto-generated method stub
 		
-		// se verifica que hay facturas para crear un cierre
-		if(cierreDao.verificarCierre()){
+
+		JPasswordField pf = new JPasswordField();
+		int action = JOptionPane.showConfirmDialog(view, pf,"Escriba la contraseña admin",JOptionPane.OK_CANCEL_OPTION);
+		
+		
+		String pwd=new String(pf.getPassword());
+		//comprabacion del permiso administrativo
+		if(action < 0){
 			
-			ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
-			CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conexion);
 			
-			if(ctlContar.getEstado())//verifica que se ordeno realizar el cierre
-				if(cierreDao.actualizarCierre(ctlContar.getTotal()))
-				{ 
-					try {
-						//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
-						AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierreDao.idUltimoRequistro);
-						
-						//AbstractJasperReports.Imprimir2();
-						//JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
-						
-						AbstractJasperReports.imprimierFactura();
-						AbstractJasperReports.showViewer(view);
-						
-						//this.view.setModal(false);
-						//AbstractJasperReports.imprimierFactura();
-						
-						viewContar.dispose();
-						viewContar=null;
-						ctlContar=null;
-						
-						
-						/*if(!cierre.registrarCierre()){
-							JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
-						}else{
-							AbstractJasperReports.Imprimir2();
-							JOptionPane.showMessageDialog(view, "Se realizo el corte correctamente.");
-						}*/
-						
-					} catch (SQLException ee) {
-						// TODO Auto-generated catch block
-						ee.printStackTrace();
-					}
+		}else{
+				if(this.myUsuarioDao.comprobarAdmin(pwd)){
+					
+						// se verifica que hay facturas para crear un cierre
+						if(cierreDao.verificarCierre()){
+							
+							ViewCuentaEfectivo viewContar=new ViewCuentaEfectivo(view);
+							CtlContarEfectivo ctlContar=new CtlContarEfectivo(viewContar,conexion);
+							
+							if(ctlContar.getEstado())//verifica que se ordeno realizar el cierre
+								if(cierreDao.actualizarCierre(ctlContar.getTotal()))
+								{ 
+									try {
+										//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Cierre_Caja_Saint_Paul.jasper",1 );
+										AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 4, cierreDao.idUltimoRequistro);
+										
+										
+										AbstractJasperReports.imprimierFactura();
+										AbstractJasperReports.showViewer(view);
+										
+										//this.view.setModal(false);
+										//AbstractJasperReports.imprimierFactura();
+										
+										viewContar.dispose();
+										viewContar=null;
+										ctlContar=null;
+										
+					
+										
+									} catch (SQLException ee) {
+										// TODO Auto-generated catch block
+										ee.printStackTrace();
+									}
+								}else{
+									JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
+								}
+						}//fin de la verificacion de las facturas 
+						else{
+							JOptionPane.showMessageDialog(view, "No hay facturas para crear un cierre de caja. Primero debe facturar.");
+						}
 				}else{
-					JOptionPane.showMessageDialog(view, "No se guardo el cierre de corte. Vuelva a hacer el corte.");
+					JOptionPane.showMessageDialog(view, "Usuario Invalido");
 				}
-		}//fin de la verificacion de las facturas 
-		else{
-			JOptionPane.showMessageDialog(view, "No hay facturas para crear un cierre de caja. Primero debe facturar.");
-		}
+						
+				}// fin ingreso de la contrase;a
 	}
 	@Override
 	public void keyReleased(KeyEvent e) {
