@@ -27,7 +27,7 @@ public class RenderizadorTablaFacturaCompra implements TableCellRenderer {
 		
 		 if(column==5){
 			   editor.setHorizontalAlignment(SwingConstants.RIGHT);
-			   editor.setText(" L. "+value.toString()+"  ");
+			   editor.setText(value.toString()+"  ");
 		 }
 		
 		 
