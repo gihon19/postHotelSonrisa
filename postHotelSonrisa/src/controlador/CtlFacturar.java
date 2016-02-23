@@ -40,6 +40,7 @@ import view.ViewCambioPago;
 import view.ViewCargarVenderor;
 import view.ViewCobro;
 import view.ViewCuentaEfectivo;
+import view.ViewCxCPagos;
 import view.ViewFacturar;
 import view.ViewListaArticulo;
 import view.ViewListaClientes;
@@ -697,9 +698,14 @@ public void calcularTotal(DetalleFactura detalle){
 			break;
 			
 		case KeyEvent.VK_F10:
-			ViewCobro viewCobro=new ViewCobro(view);
-			CtlCobro ctlCobro=new CtlCobro(viewCobro,conexion);
+			//ViewCobro viewCobro=new ViewCobro(view);
+			//CtlCobro ctlCobro=new CtlCobro(viewCobro,conexion);
 			
+			ViewCxCPagos viewPagoClientes=new ViewCxCPagos(view);
+			CtlFacturaPagos ctlPagoCleintes=new CtlFacturaPagos(viewPagoClientes,conexion);
+			viewPagoClientes.dispose();
+			viewPagoClientes=null;
+			ctlPagoCleintes=null;
 			
 			break;
 			

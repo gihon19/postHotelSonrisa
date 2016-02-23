@@ -31,6 +31,7 @@ import view.botones.BotonCancelar;
 import view.botones.BotonCobrar;
 import view.botones.BotonGuardar;
 import view.rendes.RenderizadorTablaFactura;
+import view.rendes.TablaRenderizadorProveedor;
 import view.tablemodel.CbxTmEmpleado;
 import view.tablemodel.TablaModeloFactura;
 import view.tablemodel.TmFacturasPago;
@@ -170,11 +171,12 @@ public class ViewCxCPagos extends JDialog {
 		modelo=new TmFacturasPago();
 		tabla.setModel(modelo);
 		
-		RenderizadorTablaFactura renderizador = new RenderizadorTablaFactura();
+		//RenderizadorTablaFactura renderizador = new RenderizadorTablaFactura();
+		TablaRenderizadorProveedor renderizador = new TablaRenderizadorProveedor();
 		tabla.setDefaultRenderer(String.class, renderizador);
 		//tableDetalle.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
-		tabla.getColumnModel().getColumn(0).setPreferredWidth(100);     //Tamaño de las columnas de las tablas
+		tabla.getColumnModel().getColumn(0).setPreferredWidth(100);     //Tamaï¿½o de las columnas de las tablas
 		tabla.getColumnModel().getColumn(1).setPreferredWidth(200);	//
 		tabla.getColumnModel().getColumn(2).setPreferredWidth(80);	//
 		tabla.getColumnModel().getColumn(3).setPreferredWidth(80);	//

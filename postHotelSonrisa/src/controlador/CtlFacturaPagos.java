@@ -269,7 +269,8 @@ public class CtlFacturaPagos implements ActionListener, MouseListener, TableMode
 					/*this.view.setVisible(false);
 					this.view.dispose();*/
 					//AbstractJasperReports.createReportFactura( conexion.getPoolConexion().getConnection(), "Factura_Saint_Paul.jasper",myFactura.getIdFactura() );
-					AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 5, myRecibo.getNoRecibo());
+					//AbstractJasperReports.createReport(conexion.getPoolConexion().getConnection(), 5, myRecibo.getNoRecibo());
+					AbstractJasperReports.createReportReciboCobroCaja(conexion.getPoolConexion().getConnection(), myRecibo.getNoRecibo());
 					//AbstractJasperReports.showViewer(view);
 					AbstractJasperReports.showViewer(view);
 					

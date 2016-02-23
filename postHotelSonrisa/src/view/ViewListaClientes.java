@@ -47,7 +47,7 @@ public class ViewListaClientes extends JDialog {
 	private JRadioButton rdbtnId;
 	private JRadioButton rdbtnNombre;
 	private JRadioButton rdbtnRtn;
-	private ButtonGroup grupoOpciones; // grupo de botones que contiene los botones de opción
+	private ButtonGroup grupoOpciones; // grupo de botones que contiene los botones de opciï¿½n
 	private JRadioButton rdbtnTodos;
 	protected BotonBuscar btnBuscar;
 	protected JTextField txtBuscar;
@@ -63,7 +63,7 @@ public class ViewListaClientes extends JDialog {
 		this.setModal(true);
 		
 		miEsquema=new BorderLayout();
-		this.setTitle("Articulos");
+		//this.setTitle("Articulos");
 		getContentPane().setLayout(miEsquema);
 		getContentPane().setBackground(PanelPadre.color1);
 		
@@ -123,7 +123,7 @@ public class ViewListaClientes extends JDialog {
 		//TablaRenderizadorProveedor renderizador = new TablaRenderizadorProveedor();
 		//tablaClientes.setDefaultRenderer(String.class, renderizador);
 		
-		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(5);     //Tamaño de las columnas de las tablas
+		tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(5);     //Tamaï¿½o de las columnas de las tablas
 		tablaClientes.getColumnModel().getColumn(1).setPreferredWidth(200);	//
 		tablaClientes.getColumnModel().getColumn(2).setPreferredWidth(100);	//
 		tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(10);	//

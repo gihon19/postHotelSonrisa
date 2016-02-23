@@ -1,5 +1,6 @@
 package modelo.dao;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,6 +26,7 @@ public class ClienteDao {
 	private PreparedStatement buscarClienteNombre=null;
 	private PreparedStatement actualizarCliente=null;
 	private PreparedStatement eliminarCliente=null;
+	private PreparedStatement saldoCliente=null;
 	
 	
 	public ClienteDao(Conexion conn){
@@ -71,7 +73,8 @@ public class ClienteDao {
 				unCliente.setCelular(res.getString("movil"));
 				unCliente.setRtn(res.getString("rtn"));
 				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
-				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				//unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				unCliente.setSaldoCuenta(this.getSaldoCliente(res.getInt("codigo_cliente")));
 				
 				clientes.add(unCliente);
 			 }
@@ -129,7 +132,8 @@ public class ClienteDao {
 				unCliente.setCelular(res.getString("movil"));
 				unCliente.setRtn(res.getString("rtn"));	
 				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
-				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				//unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				unCliente.setSaldoCuenta(this.getSaldoCliente(res.getInt("codigo_cliente")));
 				
 				clientes.add(unCliente);
 			 }
@@ -183,7 +187,8 @@ public class ClienteDao {
 				unCliente.setCelular(res.getString("movil"));
 				unCliente.setRtn(res.getString("rtn"));	
 				unCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
-				unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				//unCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				unCliente.setSaldoCuenta(this.getSaldoCliente(res.getInt("codigo_cliente")));
 				
 				clientes.add(unCliente);
 			 }
@@ -244,7 +249,7 @@ public class ClienteDao {
 				myCliente.setCelular(res.getString("movil"));
 				myCliente.setRtn(res.getString("rtn"));
 				myCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
-				//myCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				myCliente.setSaldoCuenta(this.getSaldoCliente(res.getInt("codigo_cliente")));
 				existe=true;
 			}
 		} catch (SQLException e) {
@@ -275,6 +280,63 @@ public class ClienteDao {
 		
 	}
 	
+	private BigDecimal getSaldoCliente(int idCliente) {
+		// TODO Auto-generated method stub
+
+		BigDecimal saldo=new BigDecimal(0);
+		//se crear un referencia al pool de conexiones
+		
+		//DataSource ds = DBCPDataSourceFactory.getDataSource("mysql");
+		
+		
+        Connection con = null;
+        
+       
+		
+		ResultSet res=null;
+		
+		boolean existe=false;
+		
+		
+		try {
+			con = conexion.getPoolConexion().getConnection();
+			
+			saldoCliente=con.prepareStatement("SELECT saldo FROM v_saldo_cliente where codigo_cliente=? ORDER BY codigo_reguistro DESC limit 1;");
+			
+			saldoCliente.setInt(1, idCliente);
+			res=saldoCliente.executeQuery();
+			while(res.next()){
+				saldo=res.getBigDecimal("saldo");
+				existe=true;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try{
+			
+			if(res != null) res.close();
+            if(saldoCliente != null)saldoCliente.close();
+            if(con != null) con.close();
+            
+			
+			} // fin de try
+			catch ( SQLException excepcionSql )
+			{
+				excepcionSql.printStackTrace();
+
+			} // fin de catch
+		
+		if(existe){
+				return saldo;
+		}
+		else
+			return new BigDecimal(0);
+		
+	
+		
+	}
+
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para eliminar un cliente>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	public boolean eliminarCliente(int id){
 		int resultado=0;
@@ -359,7 +421,6 @@ public class ClienteDao {
 			} // fin de catch
 		} // fin de finally
 	}
-	
 	
 	/*<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Metodo para agreagar Articulo>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>*/
 	public boolean registrarClienteContado(Cliente myCliente)
