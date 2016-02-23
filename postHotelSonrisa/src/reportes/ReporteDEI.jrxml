@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.0.final using JasperReports Library version 6.2.0  -->
-<!-- 2016-02-23T14:58:19 -->
+<!-- 2016-02-23T16:07:14 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ReporteDei" pageWidth="612" pageHeight="792" whenNoDataType="AllSectionsNoDetail" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="df013db5-f76e-44d3-b0df-bcbc46d93160">
-	<property name="com.jaspersoft.studio.data.sql.tables" value="Y2xpbmljYS52X2NpZXJyZV9jYWphIEFTICw4Nyw2NyxiYWZiN2E1Yi1jZWEzLTRlNTMtOGJiOS1i&#xA;NzhiNzk3ODJlODI7"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.unit." value="pixel"/>
 	<property name="com.jaspersoft.studio.unit.pageHeight" value="inch"/>
 	<property name="com.jaspersoft.studio.unit.pageWidth" value="inch"/>
@@ -30,23 +30,26 @@
 	<parameter name="Anio" class="java.lang.Integer"/>
 	<parameter name="usuario" class="java.lang.String"/>
 	<queryString>
-		<![CDATA[SELECT
-     v_contador_final.`fecha` AS fecha,
-     v_contador_final.`no_factura_inicio` AS no_factura_inicio,
-     v_contador_final.`no_factura_final` AS no_factura_final,
-     v_contador_final.`t_exectos` AS t_exectos,
-     v_contador_final.`isv15` AS isv15,
-     v_contador_final.`total_isv15` AS total_isv15,
-     v_contador_final.`isv18` AS isv18,
-     v_contador_final.`total_isv18` AS total_isv18,
-     v_contador_final.`total_venta_dia` AS total_venta_dia
+		<![CDATA[SELECT  fecha, 
+	 sum(total) AS total_venta_dia, 
+	 sum(subtotal_excento) as t_exectos, 
+	 sum(subtotal15) as total_isv15, 
+	 sum(subtotal18) as total_isv18, 
+	 sum(impuesto) as isv15, 
+	 sum(isvOtros) as isv4, 
+		(sum(isvOtros)/0.04) as subtotal4,
+	 sum(isv18) as isv18, 
+	 min(numero_factura) as no_factura_inicio,
+	max(numero_factura) as no_factura_final
+FROM  encabezado_factura
 
-FROM
-      v_contador_final
 WHERE
      MONTH (fecha) = $P{Mes}
 	and
-YEAR (fecha) =$P{Anio}]]>
+YEAR (fecha) =$P{Anio}
+
+GROUP BY fecha
+ORDER BY  fecha ASC]]>
 	</queryString>
 	<field name="fecha" class="java.sql.Date">
 		<fieldDescription><![CDATA[]]></fieldDescription>
@@ -75,6 +78,7 @@ YEAR (fecha) =$P{Anio}]]>
 	<field name="total_venta_dia" class="java.lang.Double">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="isv4" class="java.lang.Double"/>
 	<variable name="t_exectos_1" class="java.lang.Double" resetType="Page" calculation="Sum">
 		<variableExpression><![CDATA[$F{t_exectos}]]></variableExpression>
 	</variable>
@@ -98,6 +102,9 @@ YEAR (fecha) =$P{Anio}]]>
 	</variable>
 	<variable name="t_exectos_2" class="java.lang.Double" resetType="Column" calculation="Sum">
 		<variableExpression><![CDATA[$F{t_exectos}]]></variableExpression>
+	</variable>
+	<variable name="isv41" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{isv4}]]></variableExpression>
 	</variable>
 	<title>
 		<band height="117" splitType="Stretch">
@@ -135,7 +142,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$P{Mes}+"/"+$P{Anio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement style="Column header" x="209" y="101" width="146" height="16" forecolor="#030303" uuid="04df9e5b-6d64-42fe-8bd4-b9df61d7c907"/>
+				<reportElement style="Column header" x="180" y="101" width="136" height="16" forecolor="#030303" uuid="04df9e5b-6d64-42fe-8bd4-b9df61d7c907"/>
 				<box>
 					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
@@ -148,7 +155,9 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Ventas 15%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="355" y="101" width="137" height="16" forecolor="#030303" uuid="694d1d62-5ec9-47d6-8e2a-f80af7f20f80"/>
+				<reportElement style="Column header" x="316" y="101" width="128" height="16" forecolor="#030303" uuid="694d1d62-5ec9-47d6-8e2a-f80af7f20f80">
+					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+				</reportElement>
 				<box>
 					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
@@ -161,7 +170,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Ventas 18%]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="138" y="101" width="71" height="16" forecolor="#030303" uuid="afe0149d-0f40-424f-9e68-0add7dfecd66"/>
+				<reportElement style="Column header" x="138" y="101" width="42" height="16" forecolor="#030303" uuid="afe0149d-0f40-424f-9e68-0add7dfecd66"/>
 				<box>
 					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#666666"/>
@@ -204,7 +213,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Final]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="138" y="0" width="71" height="16" forecolor="#030303" uuid="c8ec5707-c458-4c27-82e2-c61e23e1f4e2"/>
+				<reportElement style="Column header" x="138" y="0" width="42" height="16" forecolor="#030303" uuid="c8ec5707-c458-4c27-82e2-c61e23e1f4e2"/>
 				<box>
 					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -217,7 +226,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Excentas]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="492" y="0" width="79" height="16" forecolor="#030303" uuid="3e2a378b-fd1a-4d1f-b6e4-4b80ab2a9568"/>
+				<reportElement style="Column header" x="495" y="0" width="76" height="16" forecolor="#030303" uuid="3e2a378b-fd1a-4d1f-b6e4-4b80ab2a9568"/>
 				<box>
 					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -230,7 +239,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="209" y="0" width="71" height="16" forecolor="#030303" uuid="2512a5d4-918b-48b9-8cbb-42992150f5aa">
+				<reportElement style="Column header" x="180" y="0" width="61" height="16" forecolor="#030303" uuid="2512a5d4-918b-48b9-8cbb-42992150f5aa">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -245,9 +254,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[ ISV15]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="355" y="0" width="65" height="16" forecolor="#030303" uuid="4cd4858a-89b9-476d-a4ff-b6ea1838d1a1">
-					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
-				</reportElement>
+				<reportElement style="Column header" x="316" y="0" width="61" height="16" forecolor="#030303" uuid="4cd4858a-89b9-476d-a4ff-b6ea1838d1a1"/>
 				<box>
 					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -257,7 +264,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
-				<text><![CDATA[Total ISV18]]></text>
+				<text><![CDATA[ISV18]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="2" y="0" width="60" height="16" forecolor="#030303" uuid="465a1eba-f9eb-45b9-a0c0-ffde29719935"/>
@@ -273,7 +280,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Fecha]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="280" y="0" width="75" height="16" forecolor="#030303" uuid="1954a142-3ada-420d-a78e-6af517f3702b">
+				<reportElement style="Column header" x="241" y="0" width="75" height="16" forecolor="#030303" uuid="1954a142-3ada-420d-a78e-6af517f3702b">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -288,7 +295,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
-				<reportElement style="Column header" x="420" y="0" width="72" height="16" forecolor="#030303" uuid="67ee4260-aeaf-488e-bc0b-7d46f97d3ff9">
+				<reportElement style="Column header" x="377" y="0" width="67" height="16" forecolor="#030303" uuid="67ee4260-aeaf-488e-bc0b-7d46f97d3ff9">
 					<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 				</reportElement>
 				<box>
@@ -300,7 +307,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="10" isBold="true"/>
 				</textElement>
-				<text><![CDATA[V ISV18]]></text>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
 				<reportElement style="Column header" x="62" y="-16" width="76" height="16" forecolor="#030303" uuid="2cbfe857-49c1-414c-9a8f-bccfdf230720"/>
@@ -315,6 +322,19 @@ YEAR (fecha) =$P{Anio}]]>
 				</textElement>
 				<text><![CDATA[No Factura]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="444" y="0" width="51" height="16" uuid="08bfdd17-e521-4554-b249-634560364547"/>
+				<box>
+					<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ISV4]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
@@ -322,7 +342,7 @@ YEAR (fecha) =$P{Anio}]]>
 			<frame>
 				<reportElement style="Row" mode="Opaque" x="2" y="0" width="570" height="15" uuid="fa7cec56-4ec1-48e6-a26e-7266a995d174"/>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="207" y="0" width="71" height="15" uuid="8b5236bf-0245-4909-a9fe-c2e170573ebf">
+					<reportElement style="Detail" x="178" y="0" width="61" height="15" uuid="8b5236bf-0245-4909-a9fe-c2e170573ebf">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box rightPadding="3">
@@ -363,7 +383,7 @@ YEAR (fecha) =$P{Anio}]]>
 					<textFieldExpression><![CDATA[$F{no_factura_final}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="136" y="0" width="71" height="15" uuid="5c0d2497-de15-4ec8-a184-841874865b6b"/>
+					<reportElement style="Detail" x="136" y="0" width="42" height="15" uuid="5c0d2497-de15-4ec8-a184-841874865b6b"/>
 					<box rightPadding="3">
 						<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -389,7 +409,7 @@ YEAR (fecha) =$P{Anio}]]>
 					<textFieldExpression><![CDATA[" "+$F{fecha}+" "]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="278" y="0" width="75" height="15" uuid="095faa2f-56e1-4dd4-94e0-b2dd13624fef">
+					<reportElement style="Detail" x="239" y="0" width="75" height="15" uuid="095faa2f-56e1-4dd4-94e0-b2dd13624fef">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box rightPadding="3">
@@ -404,7 +424,7 @@ YEAR (fecha) =$P{Anio}]]>
 					<textFieldExpression><![CDATA[$F{total_isv15}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="353" y="0" width="65" height="15" uuid="937cc3df-19a7-4db4-bba5-4ca9239ff8c4">
+					<reportElement style="Detail" x="314" y="0" width="61" height="15" uuid="937cc3df-19a7-4db4-bba5-4ca9239ff8c4">
 						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
 					</reportElement>
 					<box rightPadding="3">
@@ -419,7 +439,7 @@ YEAR (fecha) =$P{Anio}]]>
 					<textFieldExpression><![CDATA[$F{isv18}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="490" y="0" width="79" height="15" uuid="ca68ddd3-3514-4c9f-85c1-ae07ffe8874c"/>
+					<reportElement style="Detail" x="493" y="0" width="76" height="15" uuid="ca68ddd3-3514-4c9f-85c1-ae07ffe8874c"/>
 					<box rightPadding="3">
 						<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -432,7 +452,7 @@ YEAR (fecha) =$P{Anio}]]>
 					<textFieldExpression><![CDATA[$F{total_venta_dia}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
-					<reportElement style="Detail" x="418" y="0" width="72" height="15" uuid="7afbd5b2-92ff-4955-bba1-12f42dd8b768"/>
+					<reportElement style="Detail" x="375" y="0" width="67" height="15" uuid="7afbd5b2-92ff-4955-bba1-12f42dd8b768"/>
 					<box rightPadding="3">
 						<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
 						<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
@@ -443,6 +463,21 @@ YEAR (fecha) =$P{Anio}]]>
 						<font size="10"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{total_isv18}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" pattern="¤ #,##0.00">
+					<reportElement style="Detail" x="442" y="0" width="51" height="15" uuid="34751d49-4b03-4de2-869a-b605396429d1">
+						<property name="com.jaspersoft.studio.unit.width" value="pixel"/>
+					</reportElement>
+					<box rightPadding="2">
+						<topPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="0.2" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{isv4}]]></textFieldExpression>
 				</textField>
 			</frame>
 		</band>
@@ -488,7 +523,7 @@ YEAR (fecha) =$P{Anio}]]>
 	<summary>
 		<band height="50">
 			<textField pattern="¤ #,##0.00" isBlankWhenNull="false">
-				<reportElement x="138" y="0" width="71" height="17" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="e879c67e-a8bd-4308-801a-1f8211268bb4"/>
+				<reportElement x="138" y="0" width="42" height="17" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="e879c67e-a8bd-4308-801a-1f8211268bb4"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -502,7 +537,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$V{t_exectos_2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="209" y="0" width="71" height="17" uuid="1fdb6246-2d4b-4d97-8815-5844a1759869"/>
+				<reportElement x="180" y="0" width="61" height="17" uuid="1fdb6246-2d4b-4d97-8815-5844a1759869"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -516,7 +551,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$V{isv15_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="280" y="0" width="75" height="17" uuid="b24fbe2e-fbae-46a5-9a4d-a1f369ad27a3"/>
+				<reportElement x="241" y="0" width="75" height="17" uuid="b24fbe2e-fbae-46a5-9a4d-a1f369ad27a3"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -530,7 +565,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$V{total_isv15_2}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement style="Row" x="355" y="0" width="65" height="17" uuid="38b5218c-6bc8-469c-beeb-1b10e5dc92bb"/>
+				<reportElement style="Row" x="316" y="0" width="61" height="17" uuid="38b5218c-6bc8-469c-beeb-1b10e5dc92bb"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -544,7 +579,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$V{isv18_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="420" y="0" width="72" height="17" uuid="7aa5d7bd-eaf9-45d1-beb6-370fce98be74"/>
+				<reportElement x="377" y="0" width="67" height="17" uuid="7aa5d7bd-eaf9-45d1-beb6-370fce98be74"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -558,7 +593,7 @@ YEAR (fecha) =$P{Anio}]]>
 				<textFieldExpression><![CDATA[$V{total_isv18_1}]]></textFieldExpression>
 			</textField>
 			<textField pattern="¤ #,##0.00">
-				<reportElement x="492" y="0" width="80" height="17" uuid="f1c890bf-0156-4749-9656-fc79ef2eb2d3"/>
+				<reportElement x="495" y="0" width="77" height="17" uuid="f1c890bf-0156-4749-9656-fc79ef2eb2d3"/>
 				<box rightPadding="3">
 					<pen lineWidth="0.5"/>
 					<topPen lineWidth="0.5"/>
@@ -570,6 +605,19 @@ YEAR (fecha) =$P{Anio}]]>
 					<font size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{total_venta_dia_1}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤#,##0.##;¤-#,##0.##">
+				<reportElement x="444" y="0" width="51" height="17" uuid="5a43a86a-40b5-4b61-9bfa-2c8c3823e768"/>
+				<box rightPadding="2">
+					<topPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.5" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="SansSerif" size="9" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{isv41}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>
