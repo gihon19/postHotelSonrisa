@@ -98,10 +98,11 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtUno.setHorizontalAlignment(SwingConstants.LEFT);
 		txtUno.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				
 				try {
-					calcularTotal();
+					if(txtUno.getText().trim().length()!=0)
+						calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -132,8 +133,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtDos.setText("0");
 		txtDos.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtDos.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -156,9 +158,10 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtCinco.setText("0");
 		txtCinco.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
-					calcularTotal();
+					if(txtCinco.getText().trim().length()!=0)
+						calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -180,8 +183,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtDiez.setText("0");
 		txtDiez.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtDiez.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -204,8 +208,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtVeinte.setText("0");
 		txtVeinte.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtVeinte.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -228,8 +233,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtCincuenta.setText("0");
 		txtCincuenta.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtCincuenta.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -252,8 +258,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtCien.setText("0");
 		txtCien.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtCien.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -276,8 +283,9 @@ public class ViewCuentaEfectivo extends JDialog {
 		txtQuinientos.setText("0");
 		txtQuinientos.addKeyListener(new KeyAdapter() {
 			@Override
-			public void keyPressed(KeyEvent e) {
+			public void keyReleased(KeyEvent e) {
 				try {
+					if(txtQuinientos.getText().trim().length()!=0)
 					calcularTotal();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
@@ -362,14 +370,6 @@ public class ViewCuentaEfectivo extends JDialog {
 	
 	private void calcularTotal() throws Exception  {
 		
-		if(this.txtUno.getText().trim().length()!=0 &&
-				txtDos.getText().trim().length()!=0 && 
-				txtCinco.getText().trim().length()!=0 && 
-				txtDiez.getText().trim().length()!=0 &&
-				txtVeinte.getText().trim().length()!=0 &&
-				txtCincuenta.getText().trim().length()!=0 &&
-				txtCien.getText().trim().length()!=0 &&
-				txtQuinientos.getText().trim().length()!=0){
 		
 			BigDecimal uno=new BigDecimal(this.txtUno.getText());
 			BigDecimal dos=new BigDecimal(this.txtDos.getText());
@@ -390,7 +390,7 @@ public class ViewCuentaEfectivo extends JDialog {
 			BigDecimal total=uno.add(dos).add(cinco).add(diez).add(veinte).add(cincuenta).add(cien).add(quiniento);
 			
 			txtTotal.setText(""+total.setScale(2, BigDecimal.ROUND_HALF_EVEN));
-		}
+		
 		
 		
 	}

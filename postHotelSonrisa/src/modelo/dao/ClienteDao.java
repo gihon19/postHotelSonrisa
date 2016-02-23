@@ -244,7 +244,7 @@ public class ClienteDao {
 				myCliente.setCelular(res.getString("movil"));
 				myCliente.setRtn(res.getString("rtn"));
 				myCliente.setLimiteCredito(res.getBigDecimal("limite_credito"));
-				myCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
+				//myCliente.setSaldoCuenta(res.getBigDecimal("saldo"));
 				existe=true;
 			}
 		} catch (SQLException e) {
